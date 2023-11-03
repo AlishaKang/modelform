@@ -35,9 +35,10 @@ def create(request):
         # 11. 사용자가 입력한 정보(O)를 담아서 form을 생성
         form = ArticleForm(request.POST)
         # 7. form을 검증(실패)
+        # 12. form을 검증(성공)
         if form.is_valid():
-            article = form.save()
-            return redirect('articles:index')
+            article = form.save() # 13. form을 저장장
+            return redirect('articles:index') # 14. index페이지로 redirect
         # else:
             # form = ArticleForm()
 
@@ -54,6 +55,12 @@ def create(request):
     context = {
         'form': form,
     }
-    # 4. context dict에 
-    # 9. 
+    # 4. create.html을 랜더링 
+    # 9. create.html을 랜더링
     return render(request, 'create.html', context)
+
+def delete(request, id):
+    article = Article.objects.get(id=id)
+    article.delete()
+
+    return redirect('articles:index')
